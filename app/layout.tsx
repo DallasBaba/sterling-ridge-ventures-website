@@ -12,7 +12,7 @@ export const metadata: Metadata = {
   icons: { icon: "/favicon.svg", shortcut: "/favicon.svg" },
 };
 
-const structuredData = { "@context": "https://schema.org", "@type": "ProfessionalService", name: "Sterling Ridge Ventures LLC", url: "https://sterlingridgeventures.com", email: "contact@sterlingridgeventures.com", telephone: "+1-612-987-7874", areaServed: { "@type": "City", name: "Dallas–Fort Worth" }, address: { "@type": "PostalAddress", addressRegion: "TX", addressCountry: "US" }, description: "Onsite IT field services and business technology support across Dallas–Fort Worth." };
+const structuredData = { "@context": "https://schema.org", "@type": "ProfessionalService", name: "Sterling Ridge Ventures LLC", url: "https://sterlingridgeventures.com", email: "contact@sterlingridgeventures.com", telephone: "+1-612-987-7874", areaServed: ["Dallas–Fort Worth", "United States"], address: { "@type": "PostalAddress", addressLocality: "Dallas", addressRegion: "TX", addressCountry: "US" }, description: "Dallas-based onsite IT field services with out-of-state project availability when travel and accommodations are provided." };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return <html lang="en"><body>{children}<script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }} /></body></html>;
