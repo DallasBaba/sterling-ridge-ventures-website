@@ -2,30 +2,67 @@
 
 import { FormEvent, useState } from "react";
 
-const services = [
-  ["01", "Network & Connectivity", "Router, switch, firewall and circuit deployments supported by remote engineering teams."],
-  ["02", "Smart Hands & Technical Support", "Dependable onsite troubleshooting, validation and close-out for distributed technical teams."],
-  ["03", "Hardware & Workplace Technology", "Workstation refreshes, peripherals, printers, audits and business technology installations."],
-  ["04", "Retail, POS & Digital Signage", "Store technology rollouts, kiosks, point-of-sale systems and commercial display support."],
-  ["05", "Structured Cabling & Infrastructure", "CAT5e/CAT6 installation, termination, testing, labeling and rack organization."],
+const buyerReasons = [
+  ["01", "Reliable Arrival & Site Readiness", "Work orders are reviewed before dispatch, access requirements are confirmed, and the required tools and documentation are prepared before arrival."],
+  ["02", "Dispatcher-Friendly Communication", "Clear acceptance, ETA, check-in, progress, escalation, and close-out updates reduce follow-up work for coordinators and project managers."],
+  ["03", "Remote-Team Collaboration", "Comfortable following detailed scopes, joining bridge calls, working with NOCs and engineers, and validating each step before moving forward."],
+  ["04", "Documented Close-Out", "Organized completion notes, validation results, asset details, and useful before-and-after photos support fast buyer approval."],
 ];
 
-const solutions = [
-  ["Network Deployments", "Router, switch, firewall, Meraki and connectivity installations—coordinated with your remote engineering team.", "Circuit turn-ups", "Static IP testing"],
-  ["Technology Rollouts", "Multi-location deployments, workstation refreshes and coordinated onsite project support.", "Hardware refreshes", "Multi-site coordination"],
-  ["Retail Technology Support", "POS systems, kiosks, printers, digital signage and store technology services.", "POS & peripherals", "Display validation"],
-  ["Smart Hands", "Onsite support for remote engineers, service desks, network teams and managed service providers.", "Guided diagnostics", "Close-out documentation"],
+const projectTypes = [
+  ["Network & Smart Hands", "Switch, router, firewall, circuit, access-point and rack support coordinated with remote engineering teams."],
+  ["Retail & POS Technology", "POS, payment terminal, self-checkout, back-office, kiosk and in-store technology installation and refresh work."],
+  ["Workstations & Peripherals", "Desktop deployments, hardware replacement, printer and multifunction-device service, testing and validation."],
+  ["Rollouts & Site Programs", "Repeatable execution for multi-location deployments, scheduled refreshes, surveys, inventory and decommissioning."],
 ];
 
-const industries = ["Retail", "Restaurants & Hospitality", "Professional Offices", "Healthcare Offices", "Financial Services", "Warehousing & Distribution", "Managed Service Providers", "Technology Deployment Companies"];
-const markets = ["Dallas", "Fort Worth", "Plano", "Garland", "Richardson", "Irving", "Arlington", "Frisco", "McKinney", "Carrollton", "Addison", "Mesquite", "Grand Prairie", "Lewisville", "Grapevine", "Denton"];
-const capabilities = [
-  ["Network Circuit Cutovers", "Connectivity activation, static IP testing, equipment connection and remote-engineer validation."],
-  ["Workstation Refresh Projects", "Computer replacement, peripheral reconnection and user-functionality validation."],
-  ["Retail POS Support", "Installation, connection, troubleshooting and validation of point-of-sale technology."],
-  ["Printer & Multifunction Support", "Hardware diagnostics, component replacement, paper-path testing and remote collaboration."],
-  ["Digital Signage", "Installing, reconnecting, securing and validating commercial display equipment."],
-  ["Structured Cabling", "CAT5e/CAT6 installation, termination, labeling, organization and testing support."],
+const recentProjects = [
+  {
+    image: "/field-work/network-rack.jpg",
+    label: "NETWORK INFRASTRUCTURE",
+    title: "Rack, Switching & Connectivity Support",
+    copy: "Onsite identification, cabling, connection validation and guided troubleshooting inside active business network environments.",
+    tags: ["Smart hands", "Remote engineer support", "Close-out photos"],
+  },
+  {
+    image: "/field-work/package-lockers.jpg",
+    label: "CONNECTED DEVICES",
+    title: "Package Locker Installation & Validation",
+    copy: "Physical installation support, network connectivity, device startup and functional validation for unattended customer-facing systems.",
+    tags: ["Hardware install", "Connectivity", "Functional testing"],
+  },
+  {
+    image: "/field-work/printer-service.jpg",
+    label: "BUSINESS EQUIPMENT",
+    title: "Printer & Multifunction Device Service",
+    copy: "Component access, supply and hardware replacement, connectivity checks, test output and operational confirmation.",
+    tags: ["Hardware service", "Testing", "User validation"],
+  },
+  {
+    image: "/field-work/hardware-repair.jpg",
+    label: "WORKPLACE TECHNOLOGY",
+    title: "Workstation Hardware Repair",
+    copy: "Internal component access, replacement support, cable reconnection, startup testing and coordination with remote support.",
+    tags: ["Workstations", "Component replacement", "Post-repair test"],
+  },
+];
+
+const standards = [
+  ["Before arrival", "Review scope, confirm access and tools, acknowledge scheduling requirements, and communicate ETA."],
+  ["At check-in", "Follow buyer and site procedures, confirm onsite contact, document starting conditions, and contact remote support as directed."],
+  ["During work", "Provide meaningful progress updates, protect the work area, follow change instructions, and escalate blockers immediately."],
+  ["At close-out", "Validate functionality, clean the work area, submit required photos and notes, and confirm completion before departure."],
+];
+
+const tools = [
+  "Laptop with remote-support capability",
+  "Mobile phone, charger and hotspot access",
+  "Network cable tester and patch cables",
+  "Console and common connectivity adapters",
+  "Screwdrivers, Torx bits, pliers and side cutters",
+  "Labeling and cable-management supplies",
+  "Basic electrical and mounting hand tools",
+  "Project-specific PPE and access equipment",
 ];
 
 export default function Home() {
@@ -36,14 +73,12 @@ export default function Home() {
   async function submitServiceRequest(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setFormStatus("sending");
-
     const form = event.currentTarget;
     const formData = new FormData(form);
-    formData.append("_subject", "New Sterling Ridge Ventures service request");
+    formData.append("_subject", "New buyer dispatch inquiry - Sterling Ridge Ventures");
     formData.append("_captcha", "false");
     formData.append("_template", "table");
     formData.append("_url", "https://sterlingridgeventures.com/#contact");
-
     try {
       const response = await fetch("https://formsubmit.co/ajax/contact@sterlingridgeventures.com", {
         method: "POST",
@@ -63,109 +98,102 @@ export default function Home() {
       <a className="skip-link" href="#content">Skip to content</a>
       <header className="site-header">
         <a className="brand" href="#home" aria-label="Sterling Ridge Ventures home">
-          <span className="brand-mark"><i /><i /><i /></span>
+          <span className="brand-mark"><i/><i/><i/></span>
           <span><b>STERLING RIDGE</b><small>VENTURES LLC</small></span>
         </a>
-        <button className="menu-toggle" aria-expanded={menuOpen} aria-label="Toggle navigation" onClick={() => setMenuOpen(!menuOpen)}><span /><span /></button>
+        <button className="menu-toggle" aria-expanded={menuOpen} aria-label="Toggle navigation" onClick={() => setMenuOpen(!menuOpen)}><span/><span/></button>
         <nav className={menuOpen ? "nav open" : "nav"} aria-label="Primary navigation">
-          {["Services", "Solutions", "Industries", "Coverage", "About", "Contact"].map(item => <a key={item} href={`#${item.toLowerCase()}`} onClick={() => setMenuOpen(false)}>{item}</a>)}
-          <a className="button header-cta" href="#contact" onClick={() => setMenuOpen(false)}>Request Service <span>↗</span></a>
+          <a href="#why-us">Why Us</a><a href="#experience">Experience</a><a href="#dispatch">Dispatch Standards</a><a href="#tools">Tools</a><a href="#coverage">Coverage</a>
+          <a className="button header-cta" href="#contact">Add Us to Your Network <span>↗</span></a>
         </nav>
       </header>
 
       <div id="content">
         <section className="hero" id="home">
-          <div className="hero-grid" aria-hidden="true" />
           <div className="hero-copy">
-            <p className="eyebrow"><span /> DFW-BASED FIELD IT SERVICES</p>
-            <h1>Dependable Technology Support. <em>Delivered Onsite.</em></h1>
-            <p className="hero-text">Sterling Ridge Ventures LLC provides professional field IT services, network deployments, smart-hands support, hardware installations, POS services, structured cabling, and technology rollout assistance throughout Dallas–Fort Worth.</p>
-            <div className="hero-actions"><a className="button primary" href="#contact">Request Onsite Support <span>↗</span></a><a className="button ghost" href="#services">Explore Our Services <span>↓</span></a></div>
-            <p className="location-line"><b>●</b> Based in Dallas, Texas. Out-of-state projects are available when travel and accommodations are provided.</p>
+            <p className="eyebrow"><span/> DALLAS–FORT WORTH FIELD SERVICE PROVIDER</p>
+            <h1>A Field Technician Your Dispatch Team Can <em>Route Work To Again.</em></h1>
+            <p className="hero-text">Sterling Ridge Ventures LLC supports Field Nation buyers, MSPs, project managers, and national deployment companies with reliable onsite execution, responsive communication, complete documentation, and professional close-out across Dallas–Fort Worth.</p>
+            <div className="hero-actions"><a className="button primary" href="#contact">Discuss DFW Coverage <span>↗</span></a><a className="button ghost" href="#experience">View Project Experience <span>↓</span></a></div>
+            <div className="hero-proof"><span>✓ Dispatch-ready</span><span>✓ Remote-team capable</span><span>✓ Photo-documented close-out</span></div>
           </div>
-          <div className="network-art" aria-label="Abstract network infrastructure illustration" role="img">
-            <div className="rack rack-a"><span /><span /><span /><span /><span /></div>
-            <div className="rack rack-b"><span /><span /><span /><span /></div>
-            <div className="signal s1" /><div className="signal s2" /><div className="signal s3" />
-            <div className="connection c1" /><div className="connection c2" /><div className="connection c3" />
-            <div className="status-card"><small>FIELD STATUS</small><b><i /> DEPLOYMENT READY</b><span>DFW · NORTH TEXAS</span></div>
+          <div className="hero-photo">
+            <img src="/field-work/network-validation.jpg" alt="Onsite network switch validation during a completed field service assignment"/>
+            <div className="hero-photo-card"><small>BUYER PRIORITY</small><b>Clear updates from acceptance through close-out.</b></div>
           </div>
         </section>
 
-        <section className="intro section" id="about-intro">
-          <p className="section-label">THE STERLING RIDGE STANDARD</p>
-          <h2>Technology Field Services Built Around <span>Reliable Execution.</span></h2>
-          <p>We help project managers, managed service providers, technology companies, and local businesses complete onsite technology work with professional communication, detailed documentation, and dependable technical support.</p>
-          <a className="text-link" href="#about">About Sterling Ridge <b>→</b></a>
-          <div className="trust-row">
-            {[["01","Reliable Onsite Coverage","Punctual arrivals and responsive local support."],["02","Professional Communication","Proactive updates from check-in through close-out."],["03","Detailed Documentation","Organized notes and before-and-after records."],["04","Flexible Project Support","Single dispatches, recurring work and rollouts."]].map(x => <article key={x[0]}><b>{x[0]}</b><h3>{x[1]}</h3><p>{x[2]}</p></article>)}
-          </div>
+        <section className="buyer-strip" aria-label="Buyer service summary">
+          <span><b>PRIMARY MARKET</b> Dallas–Fort Worth</span>
+          <span><b>WORK TYPES</b> Dispatches · Rollouts · Multi-Day Projects</span>
+          <span><b>BUYER SUPPORT</b> MSPs · National Deployers · Project Teams</span>
+        </section>
+
+        <section className="intro section" id="why-us">
+          <p className="section-label">WHY NATIONAL FIELD SERVICE COMPANIES CHOOSE US</p>
+          <h2>Less Chasing. Better Visibility. <span>Professional Execution.</span></h2>
+          <p>Buyers need more than someone who can complete a task. They need a provider who reads the scope, arrives prepared, communicates without being chased, works effectively with remote teams, and submits documentation that makes the work order easy to approve.</p>
+          <div className="reason-grid">{buyerReasons.map(item => <article key={item[0]}><b>{item[0]}</b><h3>{item[1]}</h3><p>{item[2]}</p></article>)}</div>
         </section>
 
         <section className="services section" id="services">
-          <div className="section-head"><div><p className="section-label light">CORE SERVICES</p><h2>Onsite Capability.<br/><span>Enterprise Discipline.</span></h2></div><p>Practical technical support delivered with clear communication, careful execution and complete close-out documentation.</p></div>
-          <div className="service-grid">
-            {services.map(s => <article className="service-card" key={s[0]}><span className="service-number">{s[0]}</span><div className="service-icon" aria-hidden="true">{s[0] === "01" ? "⌁" : s[0] === "02" ? "◎" : s[0] === "03" ? "▣" : s[0] === "04" ? "▥" : "⌗"}</div><h3>{s[1]}</h3><p>{s[2]}</p><a href="#contact" aria-label={`Learn more about ${s[1]}`}>Learn More <b>→</b></a></article>)}
-          </div>
+          <div className="section-head"><div><p className="section-label light">AVAILABLE WORK TYPES</p><h2>Ready for the Assignments<br/><span>Your Queue Needs Covered.</span></h2></div><p>Available for emergency dispatch, smart hands, scheduled rollouts, multi-day projects, and repeat DFW site coverage.</p></div>
+          <div className="service-grid">{projectTypes.map((item, index) => <article key={item[0]}><b>0{index + 1}</b><h3>{item[0]}</h3><p>{item[1]}</p><a href="#contact">Check availability →</a></article>)}</div>
         </section>
 
-        <section className="solutions section" id="solutions">
-          <div className="section-head dark"><div><p className="section-label">PRACTICAL SOLUTIONS</p><h2>Built for the Work<br/>That Happens <span>Onsite.</span></h2></div><p>We operate as a reliable extension of your technical team—aligning field execution with remote expertise.</p></div>
-          <div className="solution-list">
-            {solutions.map((s, i) => <article key={s[0]} className="solution-row"><div className={`solution-visual visual-${i+1}`}><div className="mini-rack"><i/><i/><i/><i/></div><span className="visual-tag">0{i+1} / FIELD SOLUTION</span></div><div className="solution-copy"><span>0{i+1}</span><h3>{s[0]}</h3><p>{s[1]}</p><ul><li>{s[2]}</li><li>{s[3]}</li></ul><a href="#contact">Discuss this solution <b>→</b></a></div></article>)}
-          </div>
+        <section className="experience section" id="experience">
+          <div className="section-head dark"><div><p className="section-label">RECENT PROJECT EXPERIENCE</p><h2>Field Work Shown.<br/><span>Not Stock Photography.</span></h2></div><p>Selected assignment photos are presented without customer-identifying information. Experience spans business networks, retail systems, workplace hardware, connected devices, and commercial equipment.</p></div>
+          <div className="project-grid">{recentProjects.map(project => <article key={project.title}><div className="project-photo"><img src={project.image} alt={project.title}/><span>{project.label}</span></div><div className="project-copy"><h3>{project.title}</h3><p>{project.copy}</p><ul>{project.tags.map(tag => <li key={tag}>{tag}</li>)}</ul></div></article>)}</div>
         </section>
 
-        <section className="industries section" id="industries">
-          <div className="section-head dark"><div><p className="section-label">INDUSTRIES WE SUPPORT</p><h2>Technology Support Across<br/><span>Business Environments.</span></h2></div><p>Equipped to support technology projects across a range of operating environments throughout North Texas.</p></div>
-          <div className="industry-grid">{industries.map((x,i) => <article key={x}><b>{String(i+1).padStart(2,"0")}</b><span>{x}</span><i>↗</i></article>)}</div>
+        <section className="dispatch section" id="dispatch">
+          <div className="dispatch-photo"><img src="/field-work/enterprise-rack.jpg" alt="Enterprise network rack supported during a field service assignment"/></div>
+          <div className="dispatch-copy"><p className="section-label light">WHY DISPATCH TEAMS WORK WITH US</p><h2>Communication That Protects <span>Your Client Relationship.</span></h2><p>Our role is to represent the buyer professionally onsite. That means following the scope, respecting escalation paths, keeping the coordinator informed, and never leaving the project manager guessing about status.</p><div className="dispatch-points"><span>✓ Scope reviewed before travel</span><span>✓ ETA and access coordination</span><span>✓ Timely blocker escalation</span><span>✓ Remote bridge-call participation</span><span>✓ Clean work-area standards</span><span>✓ Complete close-out package</span></div><a className="button primary" href="#contact">Route a DFW Dispatch <span>↗</span></a></div>
+        </section>
+
+        <section className="standards section">
+          <div className="section-head dark"><div><p className="section-label">RESPONSE TIME & COMMUNICATION STANDARDS</p><h2>A Predictable Workflow<br/><span>From Assignment to Approval.</span></h2></div><p>Project-specific instructions always take priority. These operating standards are designed to keep dispatchers, remote engineers, and client contacts aligned.</p></div>
+          <div className="standards-grid">{standards.map((item, index) => <article key={item[0]}><b>0{index + 1}</b><h3>{item[0]}</h3><p>{item[1]}</p></article>)}</div>
+        </section>
+
+        <section className="tools section" id="tools">
+          <div className="tools-copy"><p className="section-label light">PROFESSIONAL EQUIPMENT & TOOLS</p><h2>Prepared for More Than a <span>Basic Dispatch.</span></h2><p>Assignments are reviewed for tool, access, safety, connectivity, and documentation requirements before arrival. Project-specific equipment is confirmed with the buyer in advance.</p><div className="tool-list">{tools.map(tool => <span key={tool}>✓ {tool}</span>)}</div></div>
+          <div className="tools-gallery"><img src="/field-work/switch-validation.jpg" alt="Network switches and labeled patch connections"/><img src="/field-work/cable-routing.jpg" alt="Organized structured cabling routed into a network rack"/></div>
         </section>
 
         <section className="coverage" id="coverage">
-          <div className="coverage-copy"><p className="section-label light">LOCAL EXPERTISE</p><h2>Dallas Based.<br/><span>Available Beyond Texas.</span></h2><p>Sterling Ridge Ventures LLC is based in Dallas, Texas and provides responsive onsite technology support throughout Dallas–Fort Worth and surrounding communities. We are also available for out-of-state projects when project-approved travel and accommodations are provided.</p><div className="market-grid">{markets.map(x => <span key={x}>• {x}</span>)}</div><a className="button primary" href="#contact">Check Project Availability <span>↗</span></a></div>
-          <div className="metro-map" aria-label="Schematic Dallas Fort Worth service area" role="img"><div className="map-grid"/><span className="map-line l1"/><span className="map-line l2"/><span className="map-line l3"/><div className="map-node dallas"><i/>DALLAS<small>PRIMARY MARKET</small></div><div className="map-node fortworth"><i/>FORT WORTH<small>PRIMARY MARKET</small></div><div className="map-node plano"><i/>PLANO</div><div className="map-node denton"><i/>DENTON</div><div className="map-node arlington"><i/>ARLINGTON</div><div className="map-label">NORTH TEXAS<br/><b>SERVICE AREA</b></div></div>
-        </section>
-
-        <section className="capabilities section">
-          <div className="section-head dark"><div><p className="section-label">FEATURED CAPABILITIES</p><h2>Prepared for the<br/><span>Project in Front of You.</span></h2></div><p>Focused technical services for field assignments, coordinated deployments and business technology environments.</p></div>
-          <div className="capability-grid">{capabilities.map((c,i) => <article key={c[0]}><div className={`cap-img cap-${i+1}`}><span>CAPABILITY / {String(i+1).padStart(2,"0")}</span></div><div><h3>{c[0]}</h3><p>{c[1]}</p></div></article>)}</div>
-        </section>
-
-        <section className="credibility section"><p className="section-label">HOW WE WORK</p><h2>Professional from Check-In<br/>Through <span>Close-Out.</span></h2><div className="cred-grid">{["Dallas–Fort Worth Based","Professional Check-In & Close-Out","Detailed Before-and-After Documentation","Remote Engineering Collaboration","Flexible Scheduling","Multi-Site Project Support"].map((x,i)=><article key={x}><b>0{i+1}</b><span>{x}</span></article>)}</div></section>
-
-        <section className="about section" id="about">
-          <div className="about-art"><div className="field-panel"><span>ONSITE / DFW</span><div className="tech-lines"><i/><i/><i/><i/></div><b>YOUR TEAM.<br/>OUR FIELD<br/>EXECUTION.</b></div></div>
-          <div className="about-copy"><p className="section-label">ABOUT STERLING RIDGE</p><h2>A Reliable Onsite Extension of <span>Your Technical Team.</span></h2><p>Sterling Ridge Ventures LLC is a Texas-based technology services company supporting onsite IT projects throughout Dallas–Fort Worth. We work alongside project managers, dispatch teams, remote engineers, managed service providers, and business customers to complete technical assignments safely, professionally, and efficiently.</p><p>We emphasize punctuality, proactive communication, careful execution, complete documentation, and respect for every client environment.</p><div className="about-points"><span>✓ Field IT Support</span><span>✓ Network Deployments</span><span>✓ Smart Hands</span><span>✓ POS Systems</span><span>✓ Hardware Refreshes</span><span>✓ Structured Cabling</span><span>✓ Site Surveys</span><span>✓ After-Hours Support</span></div></div>
+          <div className="coverage-copy"><p className="section-label light">DFW PREFERRED-PROVIDER COVERAGE</p><h2>One Reliable Contact.<br/><span>Multiple North Texas Markets.</span></h2><p>Based in Dallas and available throughout the Dallas–Fort Worth metroplex for single-site dispatches, recurring assignments, coordinated rollouts, and multi-day projects. Out-of-state projects can be considered when approved travel and accommodations are provided.</p><div className="market-grid">{["Dallas","Fort Worth","Plano","Irving","Arlington","Frisco","McKinney","Richardson","Garland","Carrollton","Denton","Grapevine"].map(city => <span key={city}>• {city}</span>)}</div><a className="button primary" href="#contact">Confirm Site Availability <span>↗</span></a></div>
+          <div className="coverage-photo"><img src="/field-work/network-rack.jpg" alt="Completed commercial network rack field assignment"/><div><small>BEST FIT</small><b>Buyers seeking consistent DFW coverage without returning every assignment to the open marketplace.</b></div></div>
         </section>
 
         <section className="partnership section" id="partnership">
-          <div><p className="section-label">BECOME A PARTNER</p><h2>Build the Future of Field Service <span>Together.</span></h2></div>
-          <div className="partnership-copy"><p>Strong partnerships help us deliver dependable technology services across more locations and more complex projects. We welcome relationships with managed service providers, technology deployment companies, project managers, vendors, and organizations seeking a reliable field-services partner.</p><p>Our goal is to build long-term relationships grounded in dependable execution, transparent communication, shared growth, and a commitment to serving every client professionally.</p><a className="button primary" href="mailto:partners@sterlingridgeventures.com">Discuss a Partnership <span>↗</span></a><small>Partnership arrangements: <a href="mailto:partners@sterlingridgeventures.com">partners@sterlingridgeventures.com</a></small></div>
+          <div><p className="section-label">BECOME A PREFERRED PARTNER</p><h2>Build a Repeatable DFW <span>Dispatch Relationship.</span></h2></div>
+          <div className="partnership-copy"><p>Add Sterling Ridge Ventures LLC to your provider network for direct routing of Dallas–Fort Worth work. We are interested in long-term relationships with MSPs, national technology deployment companies, dispatch organizations, and project teams that value communication and accountable execution.</p><a className="button primary" href="mailto:partners@sterlingridgeventures.com">Discuss Provider Partnership <span>↗</span></a><small>Provider-network inquiries: <a href="mailto:partners@sterlingridgeventures.com">partners@sterlingridgeventures.com</a></small></div>
         </section>
 
         <section className="contact section" id="contact">
-          <div className="contact-lead"><p className="section-label light">START A CONVERSATION</p><h2>Let&apos;s Support Your Next <span>Technology Project.</span></h2><p>Based in Dallas, Texas, with out-of-state project availability when travel and accommodations are provided.</p><div className="contact-info"><span><small>HOME BASE</small>Dallas, Texas</span><a href="mailto:contact@sterlingridgeventures.com"><small>SERVICE REQUESTS</small>contact@sterlingridgeventures.com</a><a href="tel:+16129877874"><small>BUSINESS PHONE</small>612-987-7874</a></div></div>
-          <form className="request-form" onSubmit={submitServiceRequest} aria-label="Request service form">
-            <input className="form-honeypot" type="text" name="_honey" tabIndex={-1} autoComplete="off" aria-hidden="true" />
-            <h3>Request Onsite Service</h3><p>Tell us about your project and desired service date.</p>
-            <div className="form-grid"><label>Full Name<input required name="name" placeholder="Your full name"/></label><label>Company<input name="company" placeholder="Company name"/></label><label>Business Email<input required type="email" name="email" placeholder="name@company.com"/></label><label>Phone<input type="tel" name="phone" placeholder="(000) 000-0000"/></label><label>Project Location<input required name="location" placeholder="City or site address"/></label><label>Service Needed<select required name="service" defaultValue=""><option value="" disabled>Select a service</option>{services.map(s=><option key={s[1]}>{s[1]}</option>)}</select></label><label>Preferred Service Date<input type="date" name="date"/></label><label className="full">Project Details<textarea required name="details" rows={5} placeholder="Scope, equipment, timing and site requirements"/></label></div>
-            <button className="button form-button" type="submit" disabled={formStatus === "sending"}>{formStatus === "sending" ? "Sending Request..." : "Submit Service Request"} <span>↗</span></button>
-            <div className="form-status" aria-live="polite">{formStatus === "success" && <p className="form-success">Thank you. Your service request was submitted successfully. Our team will follow up with you shortly.</p>}{formStatus === "error" && <p className="form-error">We could not submit your request. Please try again or email contact@sterlingridgeventures.com.</p>}</div>
-            <small className="privacy-note">By submitting this form, you agree that Sterling Ridge Ventures LLC may contact you regarding your service request. Your information will not be sold. The request is submitted securely without leaving this website.</small>
+          <div className="contact-lead"><p className="section-label light">SEND A DISPATCH OR PROJECT INQUIRY</p><h2>Need Dependable DFW <span>Field Coverage?</span></h2><p>Share the location, scope, schedule, required tools, and remote-support expectations. We will review the assignment and respond regarding availability.</p><div className="contact-info"><span><small>HOME BASE</small>Dallas, Texas</span><a href="mailto:contact@sterlingridgeventures.com"><small>DISPATCH & SERVICE REQUESTS</small>contact@sterlingridgeventures.com</a><a href="tel:+16129877874"><small>BUSINESS PHONE</small>612-987-7874</a></div></div>
+          <form className="request-form" onSubmit={submitServiceRequest} aria-label="Buyer dispatch inquiry form">
+            <input className="form-honeypot" type="text" name="_honey" tabIndex={-1} autoComplete="off" aria-hidden="true"/>
+            <h3>Request DFW Field Coverage</h3><p>Provide the assignment details your dispatch team already has.</p>
+            <div className="form-grid"><label>Buyer / Company<input required name="company" placeholder="Company or dispatch organization"/></label><label>Your Name<input required name="name" placeholder="Dispatcher or project manager"/></label><label>Business Email<input required type="email" name="email" placeholder="name@company.com"/></label><label>Phone<input type="tel" name="phone" placeholder="Direct contact number"/></label><label>Site Location<input required name="location" placeholder="DFW city or site area"/></label><label>Work Type<select required name="service" defaultValue=""><option value="" disabled>Select assignment type</option><option>Emergency Dispatch</option><option>Smart Hands / Network Support</option><option>Retail / POS Technology</option><option>Workstation / Printer Support</option><option>Rollout / Multi-Site Project</option><option>Multi-Day Project</option><option>Other Field Service</option></select></label><label>Requested Date<input type="date" name="date"/></label><label className="full">Scope & Requirements<textarea required name="details" rows={5} placeholder="Scope, schedule, required tools, check-in process and remote-support details"/></label></div>
+            <button className="button form-button" type="submit" disabled={formStatus === "sending"}>{formStatus === "sending" ? "Sending Inquiry..." : "Submit Dispatch Inquiry"} <span>↗</span></button>
+            <div className="form-status" aria-live="polite">{formStatus === "success" && <p className="form-success">Your inquiry was submitted. We will review the assignment details and follow up regarding availability.</p>}{formStatus === "error" && <p className="form-error">The form could not be submitted. Please email contact@sterlingridgeventures.com.</p>}</div>
+            <small className="privacy-note">Submission does not confirm assignment acceptance. Scope, schedule, access, travel, pricing, and required tools must be agreed in writing.</small>
           </form>
         </section>
       </div>
 
       <footer>
-        <div className="footer-brand"><a className="brand inverse" href="#home"><span className="brand-mark"><i/><i/><i/></span><span><b>STERLING RIDGE</b><small>VENTURES LLC</small></span></a><p>Dallas-based onsite technology support with out-of-state project availability.</p></div>
-        <div><h3>Company</h3><a href="#about">About</a><a href="#coverage">Coverage</a><a href="#contact">Contact</a></div>
-        <div><h3>Services</h3><a href="#services">Network & Connectivity</a><a href="#services">Smart Hands</a><a href="#services">Hardware Deployment</a><a href="#services">POS & Retail Technology</a><a href="#services">Structured Cabling</a></div>
-        <div><h3>Industries</h3><a href="#industries">Retail</a><a href="#industries">Hospitality</a><a href="#industries">Professional Offices</a><a href="#industries">Healthcare Offices</a><a href="#industries">Managed Service Providers</a></div>
-        <div><h3>Contact</h3><span>Dallas, Texas</span><a href="mailto:contact@sterlingridgeventures.com">Service Requests</a><a href="#partnership">Become a Partner</a><a href="tel:+16129877874">612-987-7874</a></div>
-        <div className="footer-bottom"><span>© 2026 Sterling Ridge Ventures LLC. All rights reserved.</span><span><button onClick={()=>setLegal("privacy")}>Privacy Policy</button><button onClick={()=>setLegal("terms")}>Terms of Use</button><a href="#contact">Accessibility</a></span></div>
+        <div className="footer-brand"><a className="brand inverse" href="#home"><span className="brand-mark"><i/><i/><i/></span><span><b>STERLING RIDGE</b><small>VENTURES LLC</small></span></a><p>Buyer-focused field IT coverage for Dallas–Fort Worth dispatches, rollouts, and projects.</p></div>
+        <div><h3>Buyer Resources</h3><a href="#why-us">Why Choose Us</a><a href="#experience">Project Experience</a><a href="#dispatch">Dispatch Standards</a></div>
+        <div><h3>Work Types</h3><a href="#services">Smart Hands</a><a href="#services">Retail & POS</a><a href="#services">Rollouts</a><a href="#services">Multi-Day Projects</a></div>
+        <div><h3>Coverage</h3><a href="#coverage">Dallas–Fort Worth</a><a href="#contact">Emergency Dispatch</a><a href="#partnership">Preferred Provider Network</a></div>
+        <div><h3>Contact</h3><span>Dallas, Texas</span><a href="mailto:contact@sterlingridgeventures.com">Dispatch Inquiry</a><a href="mailto:partners@sterlingridgeventures.com">Provider Partnership</a><a href="tel:+16129877874">612-987-7874</a></div>
+        <div className="footer-bottom"><span>© 2026 Sterling Ridge Ventures LLC. All rights reserved.</span><span><button onClick={() => setLegal("privacy")}>Privacy Policy</button><button onClick={() => setLegal("terms")}>Terms of Use</button><a href="#contact">Accessibility</a></span></div>
       </footer>
 
-      {legal && <div className="modal-backdrop" role="presentation" onClick={()=>setLegal(null)}><section className="legal-modal" role="dialog" aria-modal="true" aria-labelledby="legal-title" onClick={e=>e.stopPropagation()}><button className="modal-close" aria-label="Close" onClick={()=>setLegal(null)}>×</button>{legal === "privacy" ? <><h2 id="legal-title">Privacy Policy</h2><p>Last updated: July 16, 2026</p><h3>Information we collect</h3><p>When you submit a service request, Sterling Ridge Ventures LLC may collect the contact and project information you voluntarily provide.</p><h3>How information is used</h3><p>Information is used to respond to inquiries, evaluate service requests, coordinate projects, and maintain business records. We do not sell personal information.</p><h3>Data handling</h3><p>Reasonable safeguards will be used, but no internet transmission is completely secure. Contact us to request access, correction, or deletion where applicable.</p><h3>Privacy questions and general information</h3><p>For questions about this policy, your information, or general company information, email <a href="mailto:info@sterlingridgeventures.com">info@sterlingridgeventures.com</a>.</p><p><em>This is general website information and not legal advice.</em></p></> : <><h2 id="legal-title">Terms of Use</h2><p>Last updated: July 16, 2026</p><h3>Website information</h3><p>This website provides general information about Sterling Ridge Ventures LLC and its available capabilities. Content may change without notice.</p><h3>No service guarantee</h3><p>Submitting an inquiry does not create a service agreement. Scope, availability, pricing, and terms must be confirmed in writing.</p><h3>Acceptable use</h3><p>You may not misuse the website, interfere with its operation, or attempt unauthorized access.</p><p><em>This is general website information and not legal advice.</em></p></>}</section></div>}
+      {legal && <div className="modal-backdrop" role="presentation" onClick={() => setLegal(null)}><section className="legal-modal" role="dialog" aria-modal="true" aria-labelledby="legal-title" onClick={event => event.stopPropagation()}><button className="modal-close" aria-label="Close" onClick={() => setLegal(null)}>×</button>{legal === "privacy" ? <><h2 id="legal-title">Privacy Policy</h2><p>Last updated: July 16, 2026</p><h3>Information we collect</h3><p>We may collect the business contact and project information you voluntarily submit through this website.</p><h3>How information is used</h3><p>Information is used to review inquiries, coordinate assignments, respond to buyers, and maintain business records. We do not sell personal information.</p><h3>Project photography</h3><p>Website photography is selected from completed field assignments and presented without intentionally identifying customer records, confidential ticket details, or private site information.</p><h3>Questions</h3><p>Email <a href="mailto:info@sterlingridgeventures.com">info@sterlingridgeventures.com</a> for privacy or general-information questions.</p></> : <><h2 id="legal-title">Terms of Use</h2><p>Last updated: July 16, 2026</p><h3>Website information</h3><p>This website summarizes field-service capabilities and selected project experience. Content may change without notice.</p><h3>No assignment guarantee</h3><p>Submitting an inquiry does not create a service agreement or confirm acceptance. Scope, schedule, access, pricing, travel, and terms must be confirmed in writing.</p><h3>Third-party relationships</h3><p>References to platforms, equipment categories, or project types do not imply endorsement, agency, or an exclusive relationship.</p></>}</section></div>}
     </main>
   );
 }
