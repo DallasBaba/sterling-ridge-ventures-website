@@ -65,6 +65,24 @@ const tools = [
   "Project-specific PPE and access equipment",
 ];
 
+const supportTeams = [
+  ["Field Nation Buyers", "Direct-routing support for buyers who need dependable Dallas-Fort Worth coverage without reopening every assignment to the marketplace."],
+  ["Dispatch Coordinators", "Fast scope review, clear ETA communication, milestone updates, and complete close-out documentation."],
+  ["Project Managers", "Repeatable execution for scheduled rollouts, refreshes, multi-day work, and coordinated site programs."],
+  ["MSPs & NOCs", "Onsite smart hands that follow remote direction, protect escalation paths, and validate before disconnecting."],
+  ["National Deployers", "A consistent DFW field resource for retail, workplace, network, kiosk, printer, and connected-device projects."],
+  ["Recruiting Teams", "A provider profile built around readiness, communication, documented experience, and repeat routing."],
+];
+
+const providerPromise = [
+  "We review the complete scope before accepting.",
+  "We do not disappear after assignment confirmation.",
+  "We report access issues and blockers when they happen.",
+  "We follow the buyer's communication and escalation process.",
+  "We document completed work for approval, not just attendance.",
+  "We leave the site orderly and confirm close-out before departure.",
+];
+
 export default function Home() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [legal, setLegal] = useState<"privacy" | "terms" | null>(null);
@@ -104,7 +122,7 @@ export default function Home() {
         <button className="menu-toggle" aria-expanded={menuOpen} aria-label="Toggle navigation" onClick={() => setMenuOpen(!menuOpen)}><span/><span/></button>
         <nav className={menuOpen ? "nav open" : "nav"} aria-label="Primary navigation">
           <a href="#why-us">Why Us</a><a href="#experience">Experience</a><a href="#dispatch">Dispatch Standards</a><a href="#tools">Tools</a><a href="#coverage">Coverage</a>
-          <a className="button header-cta" href="#contact">Add Us to Your Network <span>↗</span></a>
+          <a className="button header-cta" href="/become-a-dispatch-partner">Become a Dispatch Partner <span>↗</span></a>
         </nav>
       </header>
 
@@ -112,10 +130,10 @@ export default function Home() {
         <section className="hero" id="home">
           <div className="hero-copy">
             <p className="eyebrow"><span/> DALLAS–FORT WORTH FIELD SERVICE PROVIDER</p>
-            <h1>A Field Technician Your Dispatch Team Can <em>Route Work To Again.</em></h1>
-            <p className="hero-text">Sterling Ridge Ventures LLC supports Field Nation buyers, MSPs, project managers, and national deployment companies with reliable onsite execution, responsive communication, complete documentation, and professional close-out across Dallas–Fort Worth.</p>
-            <div className="hero-actions"><a className="button primary" href="#contact">Discuss DFW Coverage <span>↗</span></a><a className="button ghost" href="#experience">View Project Experience <span>↓</span></a></div>
-            <div className="hero-proof"><span>✓ Dispatch-ready</span><span>✓ Remote-team capable</span><span>✓ Photo-documented close-out</span></div>
+            <h1>Route Dallas-Fort Worth Work to a Provider Who <em>Keeps Dispatch Informed.</em></h1>
+            <p className="hero-text">Sterling Ridge Ventures LLC provides onsite field IT execution for buyers who need the scope followed, the remote team supported, problems escalated promptly, and every work order closed with useful notes and photos.</p>
+            <div className="hero-actions"><a className="button primary" href="/become-a-dispatch-partner">Add Us as a Routing Partner <span>↗</span></a><a className="button ghost" href="/capability-statement.pdf" download>Download Capability Statement <span>↓</span></a></div>
+            <div className="hero-proof"><span>✓ Scope reviewed before acceptance</span><span>✓ Milestone updates to dispatch</span><span>✓ Documented close-out</span></div>
           </div>
           <div className="hero-photo">
             <img src="/field-work/network-validation.jpg" alt="Onsite network switch validation during a completed field service assignment"/>
@@ -124,16 +142,21 @@ export default function Home() {
         </section>
 
         <section className="buyer-strip" aria-label="Buyer service summary">
-          <span><b>PRIMARY MARKET</b> Dallas–Fort Worth</span>
-          <span><b>WORK TYPES</b> Dispatches · Rollouts · Multi-Day Projects</span>
-          <span><b>BUYER SUPPORT</b> MSPs · National Deployers · Project Teams</span>
+          <span><b>ROUTING AREA</b> Dallas-Fort Worth and approved travel projects</span>
+          <span><b>AVAILABILITY</b> Scheduled · Emergency · After-Hours · Weekends</span>
+          <span><b>PROJECT FORMAT</b> Single Dispatch · Multi-Site Rollout · Multi-Day</span>
         </section>
 
         <section className="intro section" id="why-us">
           <p className="section-label">WHY NATIONAL FIELD SERVICE COMPANIES CHOOSE US</p>
-          <h2>Less Chasing. Better Visibility. <span>Professional Execution.</span></h2>
-          <p>Buyers need more than someone who can complete a task. They need a provider who reads the scope, arrives prepared, communicates without being chased, works effectively with remote teams, and submits documentation that makes the work order easy to approve.</p>
+          <h2>Reduce Dispatcher Follow-Up <span>Without Losing Site Visibility.</span></h2>
+          <p>Every assignment is handled as an extension of the buyer's operation: review the scope, confirm requirements, arrive prepared, communicate at required milestones, escalate blockers, validate the result, and submit an approval-ready close-out.</p>
           <div className="reason-grid">{buyerReasons.map(item => <article key={item[0]}><b>{item[0]}</b><h3>{item[1]}</h3><p>{item[2]}</p></article>)}</div>
+        </section>
+
+        <section className="support section" id="who-we-support">
+          <div className="section-head dark"><div><p className="section-label">WHO WE SUPPORT</p><h2>Built for the Teams Responsible<br/><span>for Getting the Site Closed.</span></h2></div><p>The site contact sees the technician. Your internal team carries the schedule, client communication, SLA, and approval responsibility. Our workflow supports both.</p></div>
+          <div className="support-grid">{supportTeams.map((item, index) => <article key={item[0]}><b>0{index + 1}</b><h3>{item[0]}</h3><p>{item[1]}</p></article>)}</div>
         </section>
 
         <section className="services section" id="services">
@@ -151,9 +174,14 @@ export default function Home() {
           <div className="dispatch-copy"><p className="section-label light">WHY DISPATCH TEAMS WORK WITH US</p><h2>Communication That Protects <span>Your Client Relationship.</span></h2><p>Our role is to represent the buyer professionally onsite. That means following the scope, respecting escalation paths, keeping the coordinator informed, and never leaving the project manager guessing about status.</p><div className="dispatch-points"><span>✓ Scope reviewed before travel</span><span>✓ ETA and access coordination</span><span>✓ Timely blocker escalation</span><span>✓ Remote bridge-call participation</span><span>✓ Clean work-area standards</span><span>✓ Complete close-out package</span></div><a className="button primary" href="#contact">Route a DFW Dispatch <span>↗</span></a></div>
         </section>
 
-        <section className="standards section">
+        <section className="standards section" id="standards">
           <div className="section-head dark"><div><p className="section-label">RESPONSE TIME & COMMUNICATION STANDARDS</p><h2>A Predictable Workflow<br/><span>From Assignment to Approval.</span></h2></div><p>Project-specific instructions always take priority. These operating standards are designed to keep dispatchers, remote engineers, and client contacts aligned.</p></div>
           <div className="standards-grid">{standards.map((item, index) => <article key={item[0]}><b>0{index + 1}</b><h3>{item[0]}</h3><p>{item[1]}</p></article>)}</div>
+        </section>
+
+        <section className="promise section">
+          <div className="promise-copy"><p className="section-label light">PREFERRED PROVIDER PROMISE</p><h2>What Dispatch Can Expect <span>On Every Accepted Assignment.</span></h2><p>Acceptance means responsibility for the agreed scope and communication process. If site conditions change, dispatch hears about it while there is still time to act.</p><a className="button primary" href="/become-a-dispatch-partner">Start a Routing Relationship <span>↗</span></a></div>
+          <div className="promise-list">{providerPromise.map((item, index) => <article key={item}><b>0{index + 1}</b><p>{item}</p></article>)}</div>
         </section>
 
         <section className="tools section" id="tools">
@@ -162,21 +190,21 @@ export default function Home() {
         </section>
 
         <section className="coverage" id="coverage">
-          <div className="coverage-copy"><p className="section-label light">DFW PREFERRED-PROVIDER COVERAGE</p><h2>One Reliable Contact.<br/><span>Multiple North Texas Markets.</span></h2><p>Based in Dallas and available throughout the Dallas–Fort Worth metroplex for single-site dispatches, recurring assignments, coordinated rollouts, and multi-day projects. Out-of-state projects can be considered when approved travel and accommodations are provided.</p><div className="market-grid">{["Dallas","Fort Worth","Plano","Irving","Arlington","Frisco","McKinney","Richardson","Garland","Carrollton","Denton","Grapevine"].map(city => <span key={city}>• {city}</span>)}</div><a className="button primary" href="#contact">Confirm Site Availability <span>↗</span></a></div>
+          <div className="coverage-copy"><p className="section-label light">COVERAGE & RESPONSE STANDARDS</p><h2>Clear Availability Before <span>Your Schedule Is at Risk.</span></h2><p>Based in Dallas and serving the Dallas-Fort Worth metroplex. New requests are reviewed against scope, location, schedule, access, tools, and remote-support requirements before acceptance. Emergency, after-hours, weekend, rollout, and multi-day availability must be confirmed for each assignment. Out-of-state projects can be considered when approved travel and accommodations are provided.</p><div className="market-grid">{["Dallas","Fort Worth","Plano","Irving","Arlington","Frisco","McKinney","Richardson","Garland","Carrollton","Denton","Grapevine"].map(city => <span key={city}>• {city}</span>)}</div><a className="button primary" href="#contact">Submit Work for Review <span>↗</span></a></div>
           <div className="coverage-photo"><img src="/field-work/network-rack.jpg" alt="Completed commercial network rack field assignment"/><div><small>BEST FIT</small><b>Buyers seeking consistent DFW coverage without returning every assignment to the open marketplace.</b></div></div>
         </section>
 
         <section className="partnership section" id="partnership">
-          <div><p className="section-label">BECOME A PREFERRED PARTNER</p><h2>Build a Repeatable DFW <span>Dispatch Relationship.</span></h2></div>
-          <div className="partnership-copy"><p>Add Sterling Ridge Ventures LLC to your provider network for direct routing of Dallas–Fort Worth work. We are interested in long-term relationships with MSPs, national technology deployment companies, dispatch organizations, and project teams that value communication and accountable execution.</p><a className="button primary" href="mailto:partners@sterlingridgeventures.com">Discuss Provider Partnership <span>↗</span></a><small>Provider-network inquiries: <a href="mailto:partners@sterlingridgeventures.com">partners@sterlingridgeventures.com</a></small></div>
+          <div><p className="section-label">DIRECT ROUTING PARTNERSHIP</p><h2>Keep a DFW Provider Ready <span>Before the Next Work Order Posts.</span></h2></div>
+          <div className="partnership-copy"><p>Share your common scopes, service area, check-in process, documentation standards, and escalation contacts once. Future Dallas-Fort Worth assignments can then begin with an established operating expectation instead of restarting provider qualification.</p><a className="button primary" href="/become-a-dispatch-partner">Become a Dispatch Partner <span>↗</span></a><a className="capability-link" href="/capability-statement.pdf" download>Download Capability Statement PDF</a><small>Provider-network inquiries: <a href="mailto:partners@sterlingridgeventures.com">partners@sterlingridgeventures.com</a></small></div>
         </section>
 
         <section className="contact section" id="contact">
           <div className="contact-lead"><p className="section-label light">SEND A DISPATCH OR PROJECT INQUIRY</p><h2>Need Dependable DFW <span>Field Coverage?</span></h2><p>Share the location, scope, schedule, required tools, and remote-support expectations. We will review the assignment and respond regarding availability.</p><div className="contact-info"><span><small>HOME BASE</small>Dallas, Texas</span><a href="mailto:contact@sterlingridgeventures.com"><small>DISPATCH & SERVICE REQUESTS</small>contact@sterlingridgeventures.com</a><a href="tel:+16129877874"><small>BUSINESS PHONE</small>612-987-7874</a></div></div>
           <form className="request-form" onSubmit={submitServiceRequest} aria-label="Buyer dispatch inquiry form">
             <input className="form-honeypot" type="text" name="_honey" tabIndex={-1} autoComplete="off" aria-hidden="true"/>
-            <h3>Request DFW Field Coverage</h3><p>Provide the assignment details your dispatch team already has.</p>
-            <div className="form-grid"><label>Buyer / Company<input required name="company" placeholder="Company or dispatch organization"/></label><label>Your Name<input required name="name" placeholder="Dispatcher or project manager"/></label><label>Business Email<input required type="email" name="email" placeholder="name@company.com"/></label><label>Phone<input type="tel" name="phone" placeholder="Direct contact number"/></label><label>Site Location<input required name="location" placeholder="DFW city or site area"/></label><label>Work Type<select required name="service" defaultValue=""><option value="" disabled>Select assignment type</option><option>Emergency Dispatch</option><option>Smart Hands / Network Support</option><option>Retail / POS Technology</option><option>Workstation / Printer Support</option><option>Rollout / Multi-Site Project</option><option>Multi-Day Project</option><option>Other Field Service</option></select></label><label>Requested Date<input type="date" name="date"/></label><label className="full">Scope & Requirements<textarea required name="details" rows={5} placeholder="Scope, schedule, required tools, check-in process and remote-support details"/></label></div>
+            <h3>Submit a Work Order for Review</h3><p>Provide enough operational detail to confirm fit and availability.</p>
+            <div className="form-grid"><label>Buyer / Company<input required name="company" placeholder="Company or dispatch organization"/></label><label>Dispatcher / Project Manager<input required name="name" placeholder="Primary coordinator"/></label><label>Business Email<input required type="email" name="email" placeholder="name@company.com"/></label><label>Direct Phone<input required type="tel" name="phone" placeholder="Escalation contact number"/></label><label>Work Order Number<input name="work_order" placeholder="WO, ticket or project ID"/></label><label>Site Location<input required name="location" placeholder="City, state or site area"/></label><label>Assignment Format<select required name="assignment_format" defaultValue=""><option value="" disabled>Select assignment format</option><option>Standard Scheduled Dispatch</option><option>Emergency Dispatch</option><option>After-Hours Dispatch</option><option>Weekend Dispatch</option><option>Multi-Site Rollout</option><option>Multi-Day Project</option></select></label><label>Work Type<select required name="service" defaultValue=""><option value="" disabled>Select work type</option><option>Smart Hands / Network Support</option><option>Retail / POS Technology</option><option>Workstation / Printer Support</option><option>Kiosk / Connected Device</option><option>Inventory / Decommission</option><option>Other Field Service</option></select></label><label>Requested Date<input required type="date" name="date"/></label><label>Arrival Window<input name="arrival_window" placeholder="Hard start or arrival range"/></label><label className="full">Scope, Tools & Check-In Requirements<textarea required name="details" rows={5} placeholder="Scope of work, required tools, access procedure, remote support contact, deliverables and escalation instructions"/></label></div>
             <button className="button form-button" type="submit" disabled={formStatus === "sending"}>{formStatus === "sending" ? "Sending Inquiry..." : "Submit Dispatch Inquiry"} <span>↗</span></button>
             <div className="form-status" aria-live="polite">{formStatus === "success" && <p className="form-success">Your inquiry was submitted. We will review the assignment details and follow up regarding availability.</p>}{formStatus === "error" && <p className="form-error">The form could not be submitted. Please email contact@sterlingridgeventures.com.</p>}</div>
             <small className="privacy-note">Submission does not confirm assignment acceptance. Scope, schedule, access, travel, pricing, and required tools must be agreed in writing.</small>
